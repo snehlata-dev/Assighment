@@ -14,7 +14,6 @@ const Post = ({ post }) => {
           {post.description}
         </dd>
       </dl>
-
       <div>
         <label><b>Last Updated Date :{"  "} </b></label>
         {moment(post.dateLastEdited).format("LLL")}

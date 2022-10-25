@@ -41,7 +41,7 @@
     object-position: bottom;
   }
 }
-
+/* Media Query for Desktop */
 @media (min-width: 1281px) {
   .posts-container {
     display: flex;
