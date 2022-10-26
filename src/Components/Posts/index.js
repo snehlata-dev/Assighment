@@ -7,24 +7,20 @@ import Pagination from "./Pagination";
 import PostGrid from "./PostGrid";
 import "./posts.css";
 import PostTable from "./PostTable";
-
 const Posts = () => {
-  
   const postList = useSelector((state) => state.PostListReducer.postList);
-
   const [searchValue, setSearchValue] = useState("");
-
   const [sortValue, setSortValue] = useState(null);
-
   const [searchString, setSearchString] = useState("");
-
   const [paginationStatus, setPaginationStatus] = useState({
     loading: false,
     firstIndex: 0,
     lastIndex: 0,
     totalCount: 0,
   });
-
+/**
+   * This function will check if sort and search value available in localStorage
+   */
   useEffect(() => {
     const searchValue = localStorage.getItem("searchValue");
     const sortValue = localStorage.getItem("sortValue");
@@ -37,7 +33,7 @@ const Posts = () => {
   }, []);
 
   /**
-   * This function will handle search value and store the value it in localstorage
+   * This function will handle search value and store the value  in localstorage
    * @param {object} e 
    */
   const handleSearchValue = (e) => {
@@ -46,7 +42,7 @@ const Posts = () => {
   };
 
   /**
-   * This function will handle sorting value and store the value it in localstorage
+   * This function will handle sorting value and store the value  in localstorage
    * @param {object} value
    */
   const handleSortValue = (value) => {
@@ -60,6 +56,10 @@ const Posts = () => {
    * @param {number} firstIndex 
    * @param {number} lastIndex 
    * @param {number} totalCount 
+   */
+
+   /**
+   * This function will update call when page will change and get data from child component
    */
   const onPageChange = (firstIndex, lastIndex, totalCount) => {
     const getLastIndex = lastIndex > totalCount ? totalCount : lastIndex;
@@ -76,7 +76,8 @@ const Posts = () => {
    * This Function will fired when we click on search Icon of input
    */
   const handleSearch = () => {
-    setSearchString(searchValue);
+    let str  =  searchValue.replace(/^"(.*)"$/, '$1');
+    setSearchString(str);
   };
 
   return (
@@ -96,6 +97,7 @@ const Posts = () => {
 
         <Select
           options={sortOption}
+          placeholder="Sort By"
           isClearable
           value={sortValue}
           onChange={handleSortValue}
@@ -103,22 +105,22 @@ const Posts = () => {
         />
       </div>
 
-      <div className="pagination-container">
-        {postList.length > 0 && <Pagination onPageChange={onPageChange} />}
-      </div>
 
       {postList.length ? (
         <div className="pagination-status">
           {paginationStatus.loading && (
-            <span>{`Showing ${paginationStatus.firstIndex}-${paginationStatus.lastIndex} of ${paginationStatus.totalCount}`}</span>
+            <span>{`Showing ${paginationStatus.firstIndex}-${paginationStatus.lastIndex} Outof ${paginationStatus.totalCount}`}</span>
           )}
         </div>
       ) : (
         ""
       )}
-
       <PostGrid searchValue={searchString} sortValue={sortValue} />
       <PostTable />
+      
+      <div className="pagination-container">
+        {postList.length > 0 && <Pagination onPageChange={onPageChange} />}
+      </div>
     </div>
   );
 };

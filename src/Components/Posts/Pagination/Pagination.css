@@ -4,7 +4,12 @@
     list-style: none;
     border-radius: 0.25rem;
 }
-
+.pagination li:first-child {
+    border-radius: 5px 0px 0px 5px;
+}
+.pagination li:last-child {
+    border-radius: 0px 5px 5px 0px;
+}
 li.page-item.disabled {
     color: #6c757d;
     pointer-events: none;
@@ -37,4 +42,3 @@ li.page-item {
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
 }
-

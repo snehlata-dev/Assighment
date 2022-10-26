@@ -5,13 +5,11 @@ import { postData } from "../../PostData";
 import Post from "./Post";
 import "./PostGrid.css";
 const PostGrid = ({ searchValue, sortValue }) => {
-
   const dispatch=useDispatch();
-
   const postList=useSelector((state)=>state.PostListReducer.postList);
-
-  console.log("postList",postList)
-
+  /**
+   * Searching functionality based on name and Description from array List
+   */
   useEffect(() => {
     if (searchValue !== "") {
       const filterPostData = postData.filter((post) => {
@@ -26,8 +24,10 @@ const PostGrid = ({ searchValue, sortValue }) => {
     }
   }, [searchValue]);
 
+   /**
+   * sorting functionality based on name and dateLastEdited from array List
+   */
   useEffect(() => {
-    console.log("sortValue", sortValue);
     const copyPostData = [...postData];
     if (sortValue?.value === "Sort By Name") {
       const filterPostData = copyPostData.sort(function (a, b) {
@@ -39,19 +39,15 @@ const PostGrid = ({ searchValue, sortValue }) => {
         }
         return 0;
       });
-      console.log("filterPostData-Name", filterPostData);
       dispatch(PostListAction(filterPostData))
     }
     if (sortValue?.value === "Sort By dateLastEdited") {
       const filterPostData = copyPostData.sort(
         (a, b) => new Date(b.dateLastEdited) - new Date(a.dateLastEdited)
       );
-      console.log("filterPostData-dateLastEdited", filterPostData);
       dispatch(PostListAction(filterPostData))
     }
   }, [sortValue]);
-
-
   return (
     <div className="posts-container">
       {postList.map((post) => {

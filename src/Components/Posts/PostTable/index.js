@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 import "./PostTable.css";
 
 const PostTable = () => {
-  
   const postList = useSelector((state) => state.PostListReducer.postList);
-
   return (
     <div>
       <table>
